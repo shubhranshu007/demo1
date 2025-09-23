@@ -1,19 +1,12 @@
-# Use an official Python runtime as a base image
-FROM python:3.11-slim
+FROM openjdk:17-jdk-slim
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-# Set working directory inside container
 WORKDIR /app
 
-# Install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Copy JAR into container
+COPY app.jar app.jar
 
-# Copy project files into the container
-COPY . .
+# Expose port (adjust if your app uses another one)
+EXPOSE 8080
 
-# Run the Python application (change this as per your app entry point)
-CMD ["python", "app.py"]
+# Run the JAR
+CMD ["java", "-jar", "app.jar"]
